@@ -1,9 +1,7 @@
 import os
 import subprocess
-import PIL.Image
 import json
 
-import cfg
 
 # path separator
 SEP = os.sep
