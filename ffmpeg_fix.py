@@ -1,8 +1,7 @@
-
 # fixes incorrect bit depth metadata present in some compressed png images
 # waifu2x will prune the alpha layer in these cases; cloning and fixing the input solves the issue
-def main(ffmpeg_dir):
-    def ffmpeg_alpha_conversion(ffmpeg_dir, i, o):
+def main(ffmpeg_dir, i, o):
+    def ffmpeg_alpha_conversion():
         return [ffmpeg_dir, '-i', i, '-pix_fmt', 'rgba', o]
 
     def ffmpeg_fix(input_dir,
