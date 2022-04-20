@@ -17,21 +17,22 @@ def parse():
         help="provide ffmpeg location to fix bad image bit depth metadata for alpha channel preservation")
     return parser.parse_args()
 
-
 def build_cmd(args):
     v = vars(args)
     if "w" in v:
-        cmd = v["w"]
+        cmd = [v["w"]]
     else:
         cmd = [WAIFU_DIR_NAME]
     if "f" in v:
         import ffmpeg_fix
-
-    cmd = ["waifu2x-ncnn-vulkan-20210521-windows/waifu2x-ncnn-vulkan.exe", "-i", args.i, "-o", args.o]
+        # TODO
+    cmd.extend(["-i", args.i, "-o", args.o])
+    return cmd
 
 def main(*opts):
+    args = parse()
     # this recursive function does the upscaling with build_cmd
-    def recur(branch='', input_dir=cfg['INPUT_DIR'], output_dir=cfg['OUTPUT_DIR']):
+    def recur(branch='', input_dir=args.i, output_dir=args.o):
         for obj in os.scandir(input_dir + branch):
             newbranch = branch + SEP + obj.name
             # TODO? untested for symlinks
